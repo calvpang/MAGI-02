@@ -5,11 +5,22 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+
+def find_project_root() -> Path:
+    """Find the project root by looking for pyproject.toml or use current directory."""
+    current = Path(__file__).resolve().parent
+    for parent in [current] + list(current.parents):
+        if (parent / "pyproject.toml").exists():
+            return parent
+    # Fallback to current working directory if pyproject.toml not found
+    return Path.cwd()
+
+
 # Load environment variables from .env file
 load_dotenv()
 
 # Project paths
-PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
+PROJECT_ROOT = find_project_root()
 DATA_DIR = PROJECT_ROOT / "data"
 DOCUMENTS_DIR = DATA_DIR / "documents"
 CHROMA_DIR = DATA_DIR / "chroma"

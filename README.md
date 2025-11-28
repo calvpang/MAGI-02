@@ -46,7 +46,6 @@ LM_STUDIO_BASE_URL=http://localhost:1234/v1
 LM_STUDIO_MODEL=local-model
 
 # RAG Configuration
-CHROMA_PERSIST_DIR=./data/chroma
 EMBEDDING_MODEL=all-MiniLM-L6-v2
 ```
 
@@ -69,7 +68,7 @@ streamlit run src/magi/app.py
 ### Using the Council Programmatically
 
 ```python
-from magi.council import MAGICouncil
+from magi.agents.council import MAGICouncil
 
 # Initialize the council
 council = MAGICouncil()

@@ -126,8 +126,10 @@ def ingest_documents(documents_dir: Path = DOCUMENTS_DIR) -> dict:
             # Generate embeddings
             embeddings = model.encode(chunks).tolist()
 
-            # Create unique IDs for each chunk
-            ids = [f"{file_path.name}_{i}" for i in range(len(chunks))]
+            # Create unique IDs for each chunk using relative path to avoid collisions
+            relative_path = file_path.relative_to(documents_dir)
+            safe_path = str(relative_path).replace("/", "_").replace("\\", "_")
+            ids = [f"{safe_path}_{i}" for i in range(len(chunks))]
 
             # Create metadata
             metadatas = [
